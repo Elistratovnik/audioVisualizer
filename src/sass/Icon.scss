@@ -1,0 +1,39 @@
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  padding: 0 40px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  background-color: #101010;
+  &_play{
+    &::after{
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-18%, -50%);
+      border: 40px solid transparent;
+      border-left: 50px solid #C4C4C4;
+    }
+  }
+  &_pause{
+    &::after{
+      content: '';
+      width: 15px;
+      height: 60px;
+      background-color: #C4C4C4;
+    }
+    &::before{
+      content: '';
+      width: 15px;
+      height: 60px;
+      background-color: #C4C4C4;
+    }
+  }
+}

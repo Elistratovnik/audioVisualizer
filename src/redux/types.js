@@ -1,0 +1,2 @@
+export const SET_CONTEXT = 'SET_CONTEXT'
+export const CREATE_ANALYZER = 'CREATE_ANALYZER'
