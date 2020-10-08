@@ -1,14 +1,38 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSpring, config } from 'react-spring';
 import '../sass/Visualizer.scss'
 import Circle from './Circle';
 import Controls from './Controls';
+import PauseIcon from './PauseIcon';
+import PlayIcon from './PlayIcon';
+import Playlist from './PlayList';
 
-function Visualizer({ song }) {
-  const audioRef = useRef()
-  let context = null
-  let analyzer = null
-  let src = null
+function Visualizer({ context, analyzer, src, audioRef, handleAddSong }) {
+  const [connect, setConnect] = useState(false)
+  const [paused, setPaused] = useState(true)
+  const dispath = useDispatch()
+  const {currentSong} = useSelector(state => ({
+    currentSong: state.currentIndex
+  })
+  )
+
+  // const endedHandler = () => {
+  //   console.log(currentSong)
+  //   // dispath(changePath(songs[currentSong + 1].path))
+  //   // dispath(changeCurrentSongIndex(currentSong + 1))
+  //   // setTimeout(start, 500)
+  // }
+
+  // useEffect(() => {
+  //   audioRef.current.addEventListener('ended', endedHandler)
+  // }, [])
+
+  useEffect(() => {
+    if (connect) {
+      setTimeout(start, 500)
+    }
+  }, [currentSong])
 
   const [{ size }, setSize] = useSpring(() => ({
     size: 0,
@@ -24,16 +48,25 @@ function Visualizer({ song }) {
     time: 0
   }))
 
+  const start = () => {
+    audioRef.current.play()
+    setPaused(false)
+    loop()
+  }
+
   const clickHandler = () => {
-    if (!context) {
-      preparation()
+    if (context && !connect) {
+      context.resume()
+      src.connect(analyzer);
+      analyzer.connect(context.destination);
+      setConnect(true)
     }
     if (audioRef.current.paused) {
-      audioRef.current.play()
-      loop()
+      start()
     } else {
       setSize({ size: 0, config: config.molasses })
       audioRef.current.pause()
+      setPaused(true)
     }
   }
 
@@ -56,20 +89,12 @@ function Visualizer({ song }) {
     }
   }
 
-  const preparation = () => {
-    context = new AudioContext();
-    analyzer = context.createAnalyser();
-    src = context.createMediaElementSource(audioRef.current);
-    src.connect(analyzer);
-    analyzer.connect(context.destination);
-    loop()
-  }
-
   return (
     <div className="visualizer" onClick={clickHandler}>
-      <audio src={song} ref={audioRef}></audio>
       <Circle size={size} color={color} />
       <Controls time={time} changeAudioTime={changeAudioTime}/>
+      {paused ? <PauseIcon connect={connect}/> : <PlayIcon/>}
+      <Playlist handleAddSong={handleAddSong} clickHandler={clickHandler}/>
     </div>
   );
 }

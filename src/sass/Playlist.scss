@@ -1,0 +1,44 @@
+.playlist {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100%;
+  border-left: 1px solid snow;
+  background-image: linear-gradient(to right, #3b3a48, #515062);
+  padding-left: 48px;
+  // border-top-left-radius: 18px;
+  // border-bottom-left-radius: 18px;
+  &__songs {
+    overflow-y: scroll;
+  }
+  &__icon-line{
+    height: 2px;
+    width: 20px;
+    background-color: white;
+  }
+  &__button{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: black;
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    top: 20px;
+    left: -51px;
+    border: none;
+    &:focus{
+      outline: none
+    }
+  }
+  &__header {
+    min-height: 100px;
+    background-image: url('../images/playlist-header.jpg');
+    background-size: cover;
+    box-shadow: inset 0 -30px 50px -20px white;
+    margin-left: -48px;
+  }
+}

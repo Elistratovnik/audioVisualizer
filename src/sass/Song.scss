@@ -1,0 +1,21 @@
+.song {
+  color: whitesmoke;
+  font-family: 'Roboto';
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 16px 6px 0;
+  border-bottom: 1px solid slategrey;
+  &__name {
+    margin: 0;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  &__artist {
+    margin: 0;
+    font-weight: 200;
+  }
+  &__duration {
+    font-size: 12px;
+  }
+}
