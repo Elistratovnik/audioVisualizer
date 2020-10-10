@@ -1,4 +1,6 @@
 .song {
+  cursor: pointer;
+  position: relative;
   color: whitesmoke;
   font-family: 'Roboto';
   display: flex;
@@ -10,12 +12,18 @@
     margin: 0;
     font-weight: 500;
     margin-bottom: 4px;
-  }
-  &__artist {
-    margin: 0;
-    font-weight: 200;
+    padding-left: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &__duration {
+    min-width: 30px;
     font-size: 12px;
+  }
+  &:hover {
+    background-color: black;
+  }
+  &_active {
+    background-color: black;
   }
 }

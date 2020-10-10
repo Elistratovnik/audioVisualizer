@@ -1,6 +1,6 @@
 import React from 'react';
 import { animated } from 'react-spring';
-import '../sass/Circle.scss'
+import '../../sass/Circle.scss'
 
 function Circle({size, color}) {
 

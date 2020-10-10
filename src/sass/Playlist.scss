@@ -1,18 +1,36 @@
+
 .playlist {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 400px;
+  position: relative;
+  justify-self: end;
+  grid-column-start: 2;
+  grid-row-start: 1;
+  grid-row-end: -1;
+  width: 0px;
   height: 100%;
-  border-left: 1px solid snow;
-  background-image: linear-gradient(to right, #3b3a48, #515062);
-  padding-left: 48px;
-  // border-top-left-radius: 18px;
-  // border-bottom-left-radius: 18px;
+  background-color: #262626;
+  z-index: 0;
+  &__title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    letter-spacing: 4px;
+    font-size: 14px;
+    position: absolute;
+    color: white;
+    top: -8px;
+    left: -74px;
+  }
   &__songs {
     overflow-y: scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar { width: 3px; height: 3px;}
+    &::-webkit-scrollbar-button {  background-color: #666; }
+    &::-webkit-scrollbar-track {  background-color: #999;}
+    &::-webkit-scrollbar-track-piece { background-color: #ffffff;}
+    &::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+    &::-webkit-scrollbar-corner { background-color: #999;}
+    &::-webkit-resizer { background-color: #666;}
   }
   &__icon-line{
     height: 2px;
@@ -20,25 +38,57 @@
     background-color: white;
   }
   &__button{
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background-color: black;
+    background-color: transparent;
     position: absolute;
     width: 50px;
     height: 30px;
-    top: 20px;
-    left: -51px;
+    top: 40px;
+    left: -60px;
     border: none;
     &:focus{
       outline: none
     }
+    &:hover .playlist__icon-line {
+      color: white;
+    }
   }
   &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100px;
-    background-image: url('../images/playlist-header.jpg');
-    background-size: cover;
-    box-shadow: inset 0 -30px 50px -20px white;
-    margin-left: -48px;
+    background-color: black;
+    // background-image: url('../images/playlist-header.jpg');
+    // background-size: cover;
+    // box-shadow: inset 0 -30px 50px -20px white;
+    overflow: hidden;
+  }
+  &__icon {
+    cursor: pointer;
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 0 0 50px #0f0,
+    0 0 100px #0f0,
+    0 0 150px #0f0,
+    0 0 200px #0f0,
+    0 0 250px #0f0;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  animation: animate 5s linear infinite;
+}
+
+
+@keyframes animate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
   }
 }
