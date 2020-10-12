@@ -57,11 +57,11 @@ function Controls({ time, changeAudioTime, clickHandler, connection, rewindToThe
 
   return (
     <animated.div style={{height: height}} className="controls" onClick={e => e.stopPropagation()}>
-      <button className="controls__hide-button" onClick={() => { setOpen(!open) }}>
+      <div className="controls__hide-button" onClick={() => { setOpen(!open) }}>
         <ControlTitle open={open}/>
         <animated.span style={{ transform: rotate }} className="controls__icon-line controls__icon-line_top" />
         <animated.span style={{ transform: rotate.interpolate(rotateInter) }} className="controls__icon-line controls__icon-line_bottom" />
-      </button>
+      </div>
       <animated.div onClick={changeAudioTime}
         onMouseDown={() => { setClicked(true) }}
         onMouseUp={() => { setClicked(false) }}

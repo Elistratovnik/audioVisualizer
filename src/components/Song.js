@@ -16,8 +16,8 @@ function Song({ duration, name, path, index, connection, props }) {
     <animated.div style={props} className={className} onClick={() => {
       if (!songSelectDisabled) {
         connection()
-        dispath(changeCurrentSongIndex(index))
         dispath(changePath(path))
+        dispath(changeCurrentSongIndex(index))
       }
     }}>
       <h3 className="song__name">{name}</h3>

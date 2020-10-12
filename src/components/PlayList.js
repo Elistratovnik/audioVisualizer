@@ -35,6 +35,16 @@ function Playlist({connection}) {
 
   const handleAddSong = (e) => {
     e.stopPropagation()
+    let error = false
+    Object.values(e.currentTarget.files).forEach((file) => {
+      if (file.type !== 'audio/mpeg') {
+        error = true
+      }
+    })
+    if (error) {
+      return alert('неправильный тип файла - загрузите mp3')
+    }
+
     const names = Object.values(e.currentTarget.files).map((file) => {
       return file.name
     })
@@ -76,11 +86,13 @@ function Playlist({connection}) {
           })
         }
       </div>
-      <button className="playlist__button" onClick={() => { setOpen(!open) }}>
+      <div className="playlist__button" onClick={() => {
+        setOpen(!open)
+        }}>
         <animated.h3 style={{opacity: opacity, transform: transform}} className="playlist__title">playlist</animated.h3>
         <animated.span style={{ transform: rotate }} className="playlist__icon-line playlist__icon-line_top" />
         <animated.span style={{ transform: rotate.interpolate(rotateInter) }} className="playlist__icon-line playlist__icon-line_bottom" />
-      </button>
+      </div>
     </animated.div>
   );
 }

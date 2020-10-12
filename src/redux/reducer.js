@@ -1,5 +1,5 @@
 import { ADD_SONG, CHANGE_CURRENT_SONG_INDEX, CHANGE_PATH, CHANGE_VOLUME, DISABLE_SONG_SELECT, ENABLE_SONG_SELECT, SET_CONTEXT, SET_CURRENT_TRACK_TIME, SET_PAUSED } from "./types";
-import song from '../music/song.mp3';
+import song from '../music/song1.mp3';
 
 const initialState = {
   context: null,

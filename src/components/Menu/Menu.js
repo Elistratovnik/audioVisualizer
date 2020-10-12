@@ -8,7 +8,7 @@ function Menu() {
   const [open, setOpen] = useState(false)
 
   const menuItems = [
-    { title: 'circle', path: '/' , id: '0'},
+    { title: 'circle', path: '/audioVisualizer' , id: '0'},
     { title: 'text', path: '/text' , id: '1'},
     { title: 'visual3', path: '/visual3', id: '2' },
     { title: 'visual4', path: '/visual4', id: '3' }

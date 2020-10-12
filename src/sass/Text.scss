@@ -1,5 +1,58 @@
 .text {
+  position: relative;
   background-color: cadetblue;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/taiwan-5460063_1920.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  &__container {
+    position: relative;
+    z-index: 1;
+    border-left: 25px solid white;
+    border-right: 25px solid white;
+    border-radius: 12px;
+    box-sizing: initial;
+    padding: 50px 25px;
+  }
+  &__title {
+    display: flex;
+    font-size: 256px;
+    color: white;
+    margin: 0;
+    line-height: 1.1em;
+  }
+  &__line {
+    height: 25px;
+    background-color: white;
+    position: absolute;
+    &_top {
+      top: 0;
+      left: -2px;
+      // transform: translateY(-100%);
+    }
+    &_bottom {
+      bottom: 0;
+      right: -2px;
+      // transform: translateY(100%);
+    }
+
+  }
+  &__letter {
+    padding: 10px;
+    position: relative;
+    // filter: hue-rotate(120deg);
+    text-shadow: 0 0 100px #0f0;
+  }
 }

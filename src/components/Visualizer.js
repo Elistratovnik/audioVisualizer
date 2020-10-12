@@ -14,7 +14,7 @@ import Text from './effects/Text';
 function Visualizer() {
   const [connect, setConnect] = useState(false)
   const dispatch = useDispatch()
-  const {currentSongIndex, path, songs, context, analyzer, src, paused, volume} = useSelector(state => ({
+  const { currentSongIndex, path, songs, context, analyzer, src, paused, volume } = useSelector(state => ({
     currentSongIndex: state.currentIndex,
     path: state.path,
     songs: state.songs,
@@ -37,26 +37,29 @@ function Visualizer() {
       // setTimeout(start, 500)
       start()
     }
-  }, [path, connect])
+  }, [path])
 
   useEffect(() => {
-    audioRef.current.volume = volume/100
+    if (connect) {
+      document.addEventListener('keyup', clickHandler)
+      return () => {
+        document.removeEventListener('keypup', clickHandler);
+      }
+    }
+  }, [connect])
+
+  useEffect(() => {
+    audioRef.current.volume = volume / 100
   }, [volume])
 
-  const [{ size }, setSize] = useSpring(() => ({
+  const [{ size, color, time, size_middle_freq }, set] = useSpring(() => ({
     size: 0,
-    config: { duration: 0 }
-  }))
-
-  const [{ color }, setColor] = useSpring(() => ({
-    color: 0
-  }))
-
-
-  const [{ time }, setTime] = useSpring(() => ({
+    size_middle_freq: 0,
+    color: 0,
     time: 0,
     config: { duration: 0 }
   }))
+
 
   const connection = () => {
     if (context && !connect) {
@@ -68,16 +71,23 @@ function Visualizer() {
   }
 
   const loop = () => {
-    if (!audioRef.current.paused) {
-      window.requestAnimationFrame(loop);
-      const array = new Uint8Array(analyzer.frequencyBinCount)
-      analyzer.getByteFrequencyData(array)
-      if (array[0] > 190) {
-        setColor({ color: Math.round(Math.random() * 360) })
-      }
-      setSize({ size: array[0] * 3, config: { duration: 0 } })
-      setTime({time: audioRef.current.currentTime ? audioRef.current.currentTime /(audioRef.current.duration / 100) : 0})
-    }
+    // if (!audioRef.current.paused) {
+    //   const array = new Uint8Array(analyzer.frequencyBinCount)
+    //   analyzer.getByteFrequencyData(array)
+    //   if (array[0] > 190) {
+    //     set({ color: Math.round(Math.random() * 360) })
+    //   }
+    //   if (array[0] > 150) {
+    //     set({ color: Math.round(Math.random() * 360) })
+    //   }
+    //   set({
+    //     size: array[0],
+    //     time: audioRef.current.currentTime ? audioRef.current.currentTime / (audioRef.current.duration / 100) : 0,
+    //     size_middle_freq: array[40], // 240 высокие частоты
+    //     config: { duration: 0 }
+    //   })
+    //   // cancelAnimationFrame(animFrame);
+    // }
   }
 
   const start = () => {
@@ -88,25 +98,27 @@ function Visualizer() {
   }
 
   const stop = () => {
-    setSize({ size: 0, config: config.molasses })
+    set({ size: 0, color: 0, config: config.molasses })
     audioRef.current.pause()
     dispatch(setPaused(true))
   }
 
-  const clickHandler = () => {
-    connection()
-    if (audioRef.current.paused) {
-      start()
-    } else {
-      stop()
+  const clickHandler = (e) => {
+    if (e.keyCode === 32 || e.keyCode === undefined) {
+      connection()
+      if (audioRef.current.paused) {
+        start()
+      } else {
+        stop()
+      }
     }
   }
 
   const changeAudioTime = (event) => {
-    const {width} = event.currentTarget.getBoundingClientRect()
+    const { width } = event.currentTarget.getBoundingClientRect()
     event.stopPropagation()
     audioRef.current.currentTime = (audioRef.current.duration / width) * event.clientX
-    setTime({time: 100 / (width/event.clientX)})
+    set({ time: 100 / (width / event.clientX) })
   }
 
   const endedHandler = () => {
@@ -127,18 +139,18 @@ function Visualizer() {
   }
   const rewindToTheStart = () => {
     audioRef.current.currentTime = 0
-    setTime({time: 0})
+    set({ time: 0 })
   }
 
   return (
-    <div className="visualizer" onClick={clickHandler}>
-      <audio src={path} ref={audioRef} onEnded={endedHandler} onPlay={() => {dispatch(enableSongSelect())}}/>
+    <div className="visualizer" onClick={clickHandler} >
+      <audio src={path} ref={audioRef} onEnded={endedHandler} onPlay={() => { dispatch(enableSongSelect()) }} />
       <div className="visualizer__effect">
         <Switch>
-          <Route exact path='/' render={() => <Circle size={size} color={color} />}></Route>
-          <Route path='/text' render={() => <Text size={size} color={color} />}></Route>
+          <Route exact path='/audioVisualizer' render={() => <Circle size={size} color={color} />}></Route>
+          <Route path='/text' render={() => <Text size={size} color={color} size_middle_freq={size_middle_freq} />}></Route>
         </Switch>
-         {paused ? <PauseIcon connect={connect}/> : <PlayIcon/>}
+        {paused ? <PauseIcon connect={connect} /> : <PlayIcon />}
       </div>
       <Controls
         clickHandler={clickHandler}
@@ -148,8 +160,8 @@ function Visualizer() {
         connection={connection}
         rewindToTheend={rewindToTheend}
         rewindToTheStart={rewindToTheStart}
-        stop={stop}/>
-      <Playlist connection={connection}/>
+        stop={stop} />
+      <Playlist connection={connection} />
     </div>
   );
 }
