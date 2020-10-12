@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/audioVisualizer/static/css/main.cf15e827.chunk.css",
-    "main.js": "/audioVisualizer/static/js/main.ab9d7568.chunk.js",
-    "main.js.map": "/audioVisualizer/static/js/main.ab9d7568.chunk.js.map",
+    "main.css": "/audioVisualizer/static/css/main.1b7c7d4a.chunk.css",
+    "main.js": "/audioVisualizer/static/js/main.14d77506.chunk.js",
+    "main.js.map": "/audioVisualizer/static/js/main.14d77506.chunk.js.map",
     "runtime-main.js": "/audioVisualizer/static/js/runtime-main.b2e7aab8.js",
     "runtime-main.js.map": "/audioVisualizer/static/js/runtime-main.b2e7aab8.js.map",
     "static/js/2.282cf81c.chunk.js": "/audioVisualizer/static/js/2.282cf81c.chunk.js",
     "static/js/2.282cf81c.chunk.js.map": "/audioVisualizer/static/js/2.282cf81c.chunk.js.map",
     "index.html": "/audioVisualizer/index.html",
-    "precache-manifest.3f77a7c5c8d2a57239396e729ff74511.js": "/audioVisualizer/precache-manifest.3f77a7c5c8d2a57239396e729ff74511.js",
+    "precache-manifest.3d9f95c0f5adc3566234eb0871974ea0.js": "/audioVisualizer/precache-manifest.3d9f95c0f5adc3566234eb0871974ea0.js",
     "service-worker.js": "/audioVisualizer/service-worker.js",
-    "static/css/main.cf15e827.chunk.css.map": "/audioVisualizer/static/css/main.cf15e827.chunk.css.map",
+    "static/css/main.1b7c7d4a.chunk.css.map": "/audioVisualizer/static/css/main.1b7c7d4a.chunk.css.map",
     "static/js/2.282cf81c.chunk.js.LICENSE.txt": "/audioVisualizer/static/js/2.282cf81c.chunk.js.LICENSE.txt",
-    "static/media/song.mp3": "/audioVisualizer/static/media/song.ef301d89.mp3",
+    "static/media/song1.mp3": "/audioVisualizer/static/media/song1.3c036f40.mp3",
     "static/media/Text.scss": "/audioVisualizer/static/media/taiwan-5460063_1920.b95235e3.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.b2e7aab8.js",
     "static/js/2.282cf81c.chunk.js",
-    "static/css/main.cf15e827.chunk.css",
-    "static/js/main.ab9d7568.chunk.js"
+    "static/css/main.1b7c7d4a.chunk.css",
+    "static/js/main.14d77506.chunk.js"
   ]
 }
