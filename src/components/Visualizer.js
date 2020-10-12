@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSpring, config } from 'react-spring';
-import { changeCurrentSongIndex, changePath, disableSongSelect, enableSongSelect, setContext, setCurrentTrackTime, setPaused } from '../redux/actions';
+import { changeCurrentSongIndex, changePath, disableSongSelect, enableSongSelect, setContext, setCurrentTrackDuration, setCurrentTrackTime, setPaused } from '../redux/actions';
 import '../sass/Visualizer.scss'
 import Circle from './effects/Circle';
 import Controls from './Controls/Controls';
@@ -52,14 +51,6 @@ function Visualizer() {
     audioRef.current.volume = volume / 100
   }, [volume])
 
-  const [{ size, color, time, size_middle_freq }, set] = useSpring(() => ({
-    size: 0,
-    size_middle_freq: 0,
-    color: 0,
-    time: 0,
-    config: { duration: 0 }
-  }))
-
 
   const connection = () => {
     if (context && !connect) {
@@ -70,35 +61,16 @@ function Visualizer() {
     }
   }
 
-  const loop = () => {
-    // if (!audioRef.current.paused) {
-    //   const array = new Uint8Array(analyzer.frequencyBinCount)
-    //   analyzer.getByteFrequencyData(array)
-    //   if (array[0] > 190) {
-    //     set({ color: Math.round(Math.random() * 360) })
-    //   }
-    //   if (array[0] > 150) {
-    //     set({ color: Math.round(Math.random() * 360) })
-    //   }
-    //   set({
-    //     size: array[0],
-    //     time: audioRef.current.currentTime ? audioRef.current.currentTime / (audioRef.current.duration / 100) : 0,
-    //     size_middle_freq: array[40], // 240 высокие частоты
-    //     config: { duration: 0 }
-    //   })
-    //   // cancelAnimationFrame(animFrame);
-    // }
-  }
-
   const start = () => {
+    setTimeout(() => {
+      dispatch(setCurrentTrackDuration(audioRef.current.duration))
+    }, 1000)
     dispatch(disableSongSelect())
     audioRef.current.play()
     dispatch(setPaused(false))
-    loop()
   }
 
   const stop = () => {
-    set({ size: 0, color: 0, config: config.molasses })
     audioRef.current.pause()
     dispatch(setPaused(true))
   }
@@ -118,7 +90,6 @@ function Visualizer() {
     const { width } = event.currentTarget.getBoundingClientRect()
     event.stopPropagation()
     audioRef.current.currentTime = (audioRef.current.duration / width) * event.clientX
-    set({ time: 100 / (width / event.clientX) })
   }
 
   const endedHandler = () => {
@@ -139,23 +110,24 @@ function Visualizer() {
   }
   const rewindToTheStart = () => {
     audioRef.current.currentTime = 0
-    set({ time: 0 })
+  }
+
+  const timeUpdateHandler = (e) => {
+    dispatch(setCurrentTrackTime(e.currentTarget.currentTime))
   }
 
   return (
     <div className="visualizer" onClick={clickHandler} >
-      <audio src={path} ref={audioRef} onEnded={endedHandler} onPlay={() => { dispatch(enableSongSelect()) }} />
+      <audio src={path} ref={audioRef} onEnded={endedHandler} onPlay={() => { dispatch(enableSongSelect()) }} onTimeUpdate={timeUpdateHandler}/>
       <div className="visualizer__effect">
         <Switch>
-          <Route exact path='/audioVisualizer' render={() => <Circle size={size} color={color} />}></Route>
-          <Route path='/text' render={() => <Text size={size} color={color} size_middle_freq={size_middle_freq} />}></Route>
+          <Route exact path='/audioVisualizer' render={() => <Circle />}></Route>
+          <Route path='/text' render={() => <Text />}></Route>
         </Switch>
         {paused ? <PauseIcon connect={connect} /> : <PlayIcon />}
       </div>
       <Controls
         clickHandler={clickHandler}
-        paused={paused}
-        time={time}
         changeAudioTime={changeAudioTime}
         connection={connection}
         rewindToTheend={rewindToTheend}

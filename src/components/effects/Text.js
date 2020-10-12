@@ -1,28 +1,57 @@
-import React from 'react';
-import { animated } from 'react-spring';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import '../../sass/Text.scss'
 
-function Text({size, color, size_middle_freq}) {
+function Text() {
+  const textFrameRef = useRef()
+  const textBackgroundRef = useRef()
+  const textContainerRef = useRef()
+  const textLineTopRef = useRef()
+  const textLineBottomRef = useRef()
+  const textLetterRef = useRef()
 
-  const sizeInterShanow = (sz) => `0 0 ${sz / 10}px #0f0, inset 0 0 ${sz / 10}px #0f0`
-  const sizeInter = (sz) => `scale(${1 + (sz/25)/150})`
-  const sizeInterContainer = (sz) => `scale(${1 + (sz/25)/50})`
-  const colorInter = (c) => `hue-rotate(${c}deg)`
-  const middleSizeInter = (sz) => `${sz*3}px`
+  const {paused, analyzer} = useSelector(state => ({
+    paused: state.paused,
+    analyzer: state.analyzer
+  }))
+
+  const textLoop = useCallback(() => {
+    console.log('textLoop')
+      const array = new Uint8Array(analyzer.frequencyBinCount)
+      analyzer.getByteFrequencyData(array)
+      if (array[0] > 190) {
+        textLetterRef.current.style.filter = `hue-rotate(${Math.round(Math.random() * 360)}deg)`
+      }
+      textBackgroundRef.current.style.transform = `scale(${1 + (array[0]/25)/150})`
+      textContainerRef.current.style.transform = `scale(${1 + (array[0]/25)/50})`
+      textLineTopRef.current.style.width = `${array[40]*3}px`
+      textLineBottomRef.current.style.width = `${array[40]*3}px`
+      textLetterRef.current.style.boxShadow = `0 0 ${array[0] / 10}px #0f0, inset 0 0 ${array[0] / 10}px #0f0`
+    textFrameRef.current = requestAnimationFrame(textLoop);
+  },[analyzer])
+
+  useEffect(() => {
+    if (!paused) {
+      textFrameRef.current = requestAnimationFrame(textLoop);
+    } else {
+      cancelAnimationFrame(textFrameRef.current);
+    }
+    return () => cancelAnimationFrame(textFrameRef.current);
+  }, [paused, textLoop]);
 
   return (
     <div className="text">
-      <animated.div style={{transform: size.interpolate(sizeInter)}} className="text__background" />
-      <animated.div style={{transform: size.interpolate(sizeInterContainer)}} className="text__container">
-        <animated.div style={{width: size_middle_freq.interpolate(middleSizeInter)}} className="text__line text__line_top" />
+      <div ref={textBackgroundRef} className="text__background" />
+      <div ref={textContainerRef} className="text__container">
+        <div ref={textLineTopRef}  className="text__line text__line_top" />
         <h3 className="text__title">
-          <animated.div className="text__letter" style={{ filter: color.interpolate(colorInter), boxShadow: size.interpolate(sizeInterShanow) }}>T</animated.div>
-          <animated.div className="text__letter" style={{ filter: color.interpolate(colorInter), boxShadow: size.interpolate(sizeInterShanow) }}>E</animated.div>
-          <animated.div className="text__letter" style={{ filter: color.interpolate(colorInter), boxShadow: size.interpolate(sizeInterShanow) }}>X</animated.div>
-          <animated.div className="text__letter" style={{ filter: color.interpolate(colorInter), boxShadow: size.interpolate(sizeInterShanow) }}>T</animated.div>
+          <div className="text__letter">T</div>
+          <div className="text__letter">E</div>
+          <div ref={textLetterRef}  className="text__letter">X</div>
+          <div className="text__letter">T</div>
         </h3>
-        <animated.div style={{width: size_middle_freq.interpolate(middleSizeInter)}} className="text__line text__line_bottom"/>
-      </animated.div>
+        <div ref={textLineBottomRef} className="text__line text__line_bottom"/>
+      </div>
     </div>
   );
 }

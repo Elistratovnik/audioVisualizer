@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { animated, useSpring } from 'react-spring';
 import '../../sass/Circle.scss'
 
 function Circle() {
@@ -19,14 +18,7 @@ function Circle() {
   //   config: { duration: 0 }
   // }))
 
-  useEffect(() => {
-    setInterval(() => {
-      console.log('sec')
-    }, 1000);
-  }, [])
-
   const circleLoop = useCallback(() => {
-    console.log('fps')
       const array = new Uint8Array(analyzer.frequencyBinCount)
       analyzer.getByteFrequencyData(array)
       if (array[0] > 190) {

@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { animated, useSpring } from 'react-spring';
 import { changeCurrentSongIndex, changePath, disableSongSelect } from '../../redux/actions';
 import '../../sass/Controls.scss';
+import ControlBand from './ControlBand';
 import ControlButtons from './ControlButtons';
 import ControlTitle from './ControlTitle';
 
-function Controls({ time, changeAudioTime, clickHandler, connection, rewindToTheend, rewindToTheStart, stop }) {
-  const [clicked, setClicked] = useState(false)
+function Controls({ changeAudioTime, clickHandler, connection, rewindToTheend, rewindToTheStart, stop }) {
   const [open, setOpen] = useState(false)
-  const timeInter = time.interpolate((d) => `linear-gradient(to right, #C90000 ${d}%, gray 0%)`)
+
   const dispatch = useDispatch()
   const { currentIndex, songSelectDisabled, songs } = useSelector(state => ({
     currentIndex: state.currentIndex,
@@ -62,12 +62,7 @@ function Controls({ time, changeAudioTime, clickHandler, connection, rewindToThe
         <animated.span style={{ transform: rotate }} className="controls__icon-line controls__icon-line_top" />
         <animated.span style={{ transform: rotate.interpolate(rotateInter) }} className="controls__icon-line controls__icon-line_bottom" />
       </div>
-      <animated.div onClick={changeAudioTime}
-        onMouseDown={() => { setClicked(true) }}
-        onMouseUp={() => { setClicked(false) }}
-        className="controls__band"
-        style={{ backgroundImage: timeInter }}
-        onMouseMove={(e) => { if (clicked) changeAudioTime(e) }} />
+      <ControlBand changeAudioTime={changeAudioTime}/>
         <ControlButtons stopSongHandler={stopSongHandler}
         backwardSongHandler={backwardSongHandler}
         clickHandler={clickHandler}

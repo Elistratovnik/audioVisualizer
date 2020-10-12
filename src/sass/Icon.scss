@@ -10,7 +10,7 @@
   border-radius: 50%;
   width: 150px;
   height: 150px;
-  background-color: #101010;
+  background-color: rgba(0, 0, 0, 0.3);
   &_play{
     &::after{
       content: '';

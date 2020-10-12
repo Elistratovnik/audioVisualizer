@@ -1,4 +1,4 @@
-const { SET_CONTEXT, ADD_SONG, CHANGE_PATH, CHANGE_CURRENT_SONG_INDEX, SET_CURRENT_TRACK_TIME, DISABLE_SONG_SELECT, ENABLE_SONG_SELECT, SET_PAUSED, CHANGE_VOLUME } = require("./types");
+const { SET_CONTEXT, ADD_SONG, CHANGE_PATH, CHANGE_CURRENT_SONG_INDEX, SET_CURRENT_TRACK_TIME, DISABLE_SONG_SELECT, ENABLE_SONG_SELECT, SET_PAUSED, CHANGE_VOLUME, SET_CURRENT_TRACK_DURATION } = require("./types");
 
 export function setContext(context, audioRef) {
   return {
@@ -35,6 +35,13 @@ export function setCurrentTrackTime(time) {
   return {
     type: SET_CURRENT_TRACK_TIME,
     payload: time
+  }
+}
+
+export function setCurrentTrackDuration(duration) {
+  return {
+    type: SET_CURRENT_TRACK_DURATION,
+    payload: duration
   }
 }
 

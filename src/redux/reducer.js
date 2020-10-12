@@ -1,4 +1,4 @@
-import { ADD_SONG, CHANGE_CURRENT_SONG_INDEX, CHANGE_PATH, CHANGE_VOLUME, DISABLE_SONG_SELECT, ENABLE_SONG_SELECT, SET_CONTEXT, SET_CURRENT_TRACK_TIME, SET_PAUSED } from "./types";
+import { ADD_SONG, CHANGE_CURRENT_SONG_INDEX, CHANGE_PATH, CHANGE_VOLUME, DISABLE_SONG_SELECT, ENABLE_SONG_SELECT, SET_CONTEXT, SET_CURRENT_TRACK_DURATION, SET_CURRENT_TRACK_TIME, SET_PAUSED } from "./types";
 import song from '../music/song1.mp3';
 
 const initialState = {
@@ -8,7 +8,8 @@ const initialState = {
   songs: [],
   path: song,
   currentIndex: -1,
-  currentTime: '--:--',
+  currentTime: 0,
+  currentTrackDuration: 0,
   songSelectDisabled: false,
   paused: true,
   volume: 100
@@ -26,6 +27,8 @@ export function reduser(state = initialState, action) {
       return { ...state, currentIndex: action.payload }
     case SET_CURRENT_TRACK_TIME:
       return { ...state, currentTime: action.payload }
+    case SET_CURRENT_TRACK_DURATION:
+      return { ...state, currentTrackDuration: action.payload }
     case DISABLE_SONG_SELECT:
       return { ...state, songSelectDisabled: true }
     case ENABLE_SONG_SELECT:
