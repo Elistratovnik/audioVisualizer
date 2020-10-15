@@ -1,9 +1,9 @@
 .menu {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   position: absolute;
-  z-index: 10;
+  z-index: 999;
   top: 20px;
   left: 20px;
   height: 46px;

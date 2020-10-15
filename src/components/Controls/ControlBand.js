@@ -1,22 +1,41 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import Moment from 'react-moment';
 
-function ControlBand({ changeAudioTime }) {
-  const currentTimeRef = useRef()
-  const timerRef = useRef()
-  const { currentTime, duration } = useSelector(state => ({
-    currentTime: state.currentTime,
-    duration: state.currentTrackDuration
+function ControlBand({ audioRef }) {
+  const [currentTime, setCurrentTime] = useState(0)
+  let updateCurrentTimeRef = useRef()
+  const { duration, paused } = useSelector(state => ({
+    duration: state.currentTrackDuration,
+    paused: state.paused
   }))
 
   useEffect(() => {
-    currentTimeRef.current.style.width = currentTime / (duration / 100) + '%'
-  }, [currentTime, duration])
+    if (!paused) {
+      updateCurrentTimeRef.current = setInterval(() => {
+        setCurrentTime(audioRef.current.currentTime)
+      }, 200)
+    } else {
+      clearInterval(updateCurrentTimeRef.current)
+    }
+    return () => {
+      clearInterval(updateCurrentTimeRef.current)
+    }
+  }, [paused, audioRef])
+
+  const changeAudioTime = (event) => {
+    const { width } = event.currentTarget.getBoundingClientRect()
+    event.stopPropagation()
+    audioRef.current.currentTime = (audioRef.current.duration / width) * event.clientX
+    setCurrentTime((audioRef.current.duration / width) * event.clientX)
+  }
 
   return (
     <div onClick={changeAudioTime} className="controls__band">
-      <div ref={currentTimeRef} className="controls__current-time">
-        <div ref={timerRef} className="controls__timer">{Math.floor((duration - currentTime) / 60) + ':' + Math.round((duration - currentTime) % 60)}</div>
+      <div style={{width: audioRef.current ? audioRef.current.currentTime / (duration / 100) + '%' : 0}} className="controls__current-time" />
+      <div className="controls__timer">
+        <Moment format="mm:ss / " >{currentTime * 1000}</Moment>
+        <Moment format="mm:ss" >{duration ? Math.floor(duration * 1000) : 0}</Moment>
       </div>
     </div>
   );

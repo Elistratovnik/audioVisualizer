@@ -10,8 +10,7 @@ function Menu() {
   const menuItems = [
     { title: 'circle', path: '/audioVisualizer' , id: '0'},
     { title: 'text', path: '/text' , id: '1'},
-    { title: 'visual3', path: '/visual3', id: '2' },
-    { title: 'visual4', path: '/visual4', id: '3' }
+    { title: 'spotlight', path: '/spotlight', id: '2' }
   ]
 
   const openMenuRef = useRef();

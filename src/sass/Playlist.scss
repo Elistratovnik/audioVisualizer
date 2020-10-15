@@ -10,7 +10,14 @@
   width: 0px;
   height: 100%;
   background-color: #262626;
-  z-index: 0;
+  z-index: 999;
+  &__empty {
+    white-space: nowrap;
+    text-align: center;
+    overflow: hidden;
+    color: lightgrey;
+    margin-top: 24px;
+  }
   &__title {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -19,8 +26,9 @@
     font-size: 14px;
     position: absolute;
     color: white;
-    top: 4px;
+    top: -7px;
     left: -111px;
+    padding: 12px 0;
   }
   &__songs {
     overflow-y: scroll;
@@ -37,6 +45,12 @@
     height: 2px;
     width: 20px;
     background-color: white;
+    &_top {
+      transform: rotate(-45deg);
+    }
+    &_bottom {
+      transform: rotate(45deg);
+    }
   }
   &__button{
     cursor: pointer;

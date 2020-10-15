@@ -8,6 +8,7 @@ function ControlButtons({stopSongHandler, backwardSongHandler, clickHandler, nex
     paused: state.paused,
     volume: state.volume
   }))
+
   return (
     <div className="controls__buttons">
       <i className="fa fa-stop controls__stop" aria-hidden="true" onClick={stopSongHandler}></i>

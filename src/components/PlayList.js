@@ -3,19 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSpring, animated, useChain, useTransition} from 'react-spring';
 import { addSong } from '../redux/actions';
 import '../sass/Playlist.scss';
+import Empty from './Playlist/Empty';
 import Song from './Song';
 
 function Playlist({connection}) {
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
   const songs = useSelector(state => state.songs)
   const dispatch = useDispatch()
 
   const playlistSpringRef = useRef()
-  const {width, opacity, transform} = useSpring({
+  const {width, opacity} = useSpring({
     ref: playlistSpringRef,
     width: open ? '400px' : '0px',
-    opacity: open ? 0 : 1,
-    transform: open ? 'translateX(-100%)' : 'translateX(0%)'
+    opacity: open ? 0 : 1
   })
 
   const showSongsRef = useRef();
@@ -35,41 +36,34 @@ function Playlist({connection}) {
 
   const handleAddSong = (e) => {
     e.stopPropagation()
-    let error = false
     Object.values(e.currentTarget.files).forEach((file) => {
+      let error = ''
+      const repeats = songs.find((song) => {
+        return song.name === file.name
+      })
       if (file.type !== 'audio/mpeg') {
-        error = true
+        error = `неправильный тип файла у ${file.name} - загрузите mp3`
       }
-    })
-    if (error) {
-      return alert('неправильный тип файла - загрузите mp3')
-    }
-
-    const names = Object.values(e.currentTarget.files).map((file) => {
-      return file.name
-    })
-    for (let i = 0; i < Object.values(e.currentTarget.files).length; i++) {
+      if (repeats || error) {
+        if (error) alert(error)
+        return
+      }
       let reader = new FileReader();
-      reader.readAsDataURL(e.currentTarget.files[i])
+      reader.readAsDataURL(file)
       reader.onloadstart = function () {
-        console.log('start')
+        setLoading(true)
       }
-      reader.onloadend = function () {
-        console.log('end')
-      }
-
       reader.onload = function () {
-        setTimeout(() => {
-          dispatch(addSong({name: names[i], duration: '--:--', path: reader.result}))
-        }, 500)
+        setLoading(false)
+        dispatch(addSong({name: file.name, path: reader.result}))
       };
       reader.onerror = function () {
         console.log(reader.error);
       };
-    }
+    })
   }
 
-  useChain(open ? [playlistSpringRef, showSongsRef] : [showSongsRef, playlistSpringRef])
+  useChain(open ? [playlistSpringRef, showSongsRef] : [showSongsRef, playlistSpringRef], [0, open ? 0.1 : 0.8])
 
   return (
     <animated.div style={{width: width}} className="playlist" onClick={e => e.stopPropagation()}>
@@ -79,6 +73,7 @@ function Playlist({connection}) {
         </label>
         <input style={{display: 'none'}} name="download" type="file" id="download" onChange={handleAddSong} multiple></input>
       </header>
+      {!songs.length && <Empty loading={loading}/>}
       <div className="playlist__songs">
         {
           showSongs.map(({item, props}, index) => {
@@ -89,7 +84,7 @@ function Playlist({connection}) {
       <div className="playlist__button" onClick={() => {
         setOpen(!open)
         }}>
-        <animated.h3 style={{opacity: opacity, transform: transform}} className="playlist__title">playlist</animated.h3>
+        <animated.h3 style={{opacity: opacity}} className="playlist__title">playlist</animated.h3>
         <animated.span style={{ transform: rotate }} className="playlist__icon-line playlist__icon-line_top" />
         <animated.span style={{ transform: rotate.interpolate(rotateInter) }} className="playlist__icon-line playlist__icon-line_bottom" />
       </div>

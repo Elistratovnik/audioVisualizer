@@ -8,7 +8,9 @@ function Text() {
   const textContainerRef = useRef()
   const textLineTopRef = useRef()
   const textLineBottomRef = useRef()
-  const textLetterRef = useRef()
+  const textLineLeftRef = useRef()
+  const textLineRightRef = useRef()
+  const textTitleRef = useRef()
 
   const {paused, analyzer} = useSelector(state => ({
     paused: state.paused,
@@ -16,17 +18,18 @@ function Text() {
   }))
 
   const textLoop = useCallback(() => {
-    console.log('textLoop')
       const array = new Uint8Array(analyzer.frequencyBinCount)
       analyzer.getByteFrequencyData(array)
       if (array[0] > 190) {
-        textLetterRef.current.style.filter = `hue-rotate(${Math.round(Math.random() * 360)}deg)`
+        textTitleRef.current.style.filter = `hue-rotate(${Math.round(Math.random() * 360)}deg)`
       }
-      textBackgroundRef.current.style.transform = `scale(${1 + (array[0]/25)/150})`
-      textContainerRef.current.style.transform = `scale(${1 + (array[0]/25)/50})`
-      textLineTopRef.current.style.width = `${array[40]*3}px`
-      textLineBottomRef.current.style.width = `${array[40]*3}px`
-      textLetterRef.current.style.boxShadow = `0 0 ${array[0] / 10}px #0f0, inset 0 0 ${array[0] / 10}px #0f0`
+      textBackgroundRef.current.style.transform = `scale(${1 + (array[0]/25)/300})`
+      textContainerRef.current.style.transform = `scale(${1 + (array[0]/25)/100})`
+      textLineTopRef.current.style.width = `${array[40] / 2.5}%`
+      textLineBottomRef.current.style.width = `${array[40]/ 2.5}%`
+      textLineLeftRef.current.style.height = `calc(100% - ${array[40] / 2.5}%)`
+      textLineRightRef.current.style.height = `calc(100% - ${array[40] / 2.5}%)`
+      textTitleRef.current.style.boxShadow = `0 0 ${array[0] / 10}px #0f0, inset 0 0 ${array[0] / 10}px #0f0`
     textFrameRef.current = requestAnimationFrame(textLoop);
   },[analyzer])
 
@@ -44,13 +47,12 @@ function Text() {
       <div ref={textBackgroundRef} className="text__background" />
       <div ref={textContainerRef} className="text__container">
         <div ref={textLineTopRef}  className="text__line text__line_top" />
-        <h3 className="text__title">
-          <div className="text__letter">T</div>
-          <div className="text__letter">E</div>
-          <div ref={textLetterRef}  className="text__letter">X</div>
-          <div className="text__letter">T</div>
+        <div ref={textLineLeftRef} className="text__line text__line_left" />
+        <h3 ref={textTitleRef} className="text__title">
+          TEXT
         </h3>
         <div ref={textLineBottomRef} className="text__line text__line_bottom"/>
+        <div ref={textLineRightRef} className="text__line text__line_right" />
       </div>
     </div>
   );

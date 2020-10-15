@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCurrentSongIndex, changePath, disableSongSelect, enableSongSelect, setContext, setCurrentTrackDuration, setCurrentTrackTime, setPaused } from '../redux/actions';
+import { addSongDuration, changeCurrentSongIndex, changePath, disableSongSelect, enableSongSelect, setContext, setCurrentTrackDuration, setPaused } from '../redux/actions';
 import '../sass/Visualizer.scss'
 import Circle from './effects/Circle';
 import Controls from './Controls/Controls';
@@ -9,6 +9,7 @@ import PlayIcon from './PlayIcon';
 import Playlist from './PlayList';
 import { Route, Switch } from 'react-router-dom';
 import Text from './effects/Text';
+import Spotlight from './effects/Spotlight';
 
 function Visualizer() {
   const [connect, setConnect] = useState(false)
@@ -29,14 +30,22 @@ function Visualizer() {
 
   useEffect(() => {
     dispatch(setContext(new AudioContext(), audioRef.current))
+    setTimeout(() => {
+      dispatch(setCurrentTrackDuration(audioRef.current.duration))
+    }, 1000)
   }, [dispatch])
 
   useEffect(() => {
     if (connect) {
-      // setTimeout(start, 500)
+      dispatch(disableSongSelect())
       start()
+      setTimeout(() => {
+        dispatch(setCurrentTrackDuration(audioRef.current.duration))
+        dispatch(addSongDuration(currentSongIndex))
+        dispatch(enableSongSelect())
+      }, 1000)
     }
-  }, [path])
+  }, [path, dispatch])
 
   useEffect(() => {
     if (connect) {
@@ -51,7 +60,6 @@ function Visualizer() {
     audioRef.current.volume = volume / 100
   }, [volume])
 
-
   const connection = () => {
     if (context && !connect) {
       context.resume()
@@ -62,10 +70,6 @@ function Visualizer() {
   }
 
   const start = () => {
-    setTimeout(() => {
-      dispatch(setCurrentTrackDuration(audioRef.current.duration))
-    }, 1000)
-    dispatch(disableSongSelect())
     audioRef.current.play()
     dispatch(setPaused(false))
   }
@@ -86,19 +90,12 @@ function Visualizer() {
     }
   }
 
-  const changeAudioTime = (event) => {
-    const { width } = event.currentTarget.getBoundingClientRect()
-    event.stopPropagation()
-    audioRef.current.currentTime = (audioRef.current.duration / width) * event.clientX
-  }
-
   const endedHandler = () => {
     if (songs.length > currentSongIndex + 1) {
       dispatch(changePath(songs[currentSongIndex + 1].path))
       dispatch(changeCurrentSongIndex(currentSongIndex + 1))
-      dispatch(setCurrentTrackTime(audioRef.current.duration))
     } else {
-      alert('закончились песенки =(')
+      alert('закончились')
       dispatch(setPaused(true))
       dispatch(enableSongSelect())
     }
@@ -106,29 +103,25 @@ function Visualizer() {
 
   const rewindToTheend = () => {
     audioRef.current.currentTime = audioRef.current.duration
-    start()
   }
   const rewindToTheStart = () => {
     audioRef.current.currentTime = 0
   }
 
-  const timeUpdateHandler = (e) => {
-    dispatch(setCurrentTrackTime(e.currentTarget.currentTime))
-  }
-
   return (
     <div className="visualizer" onClick={clickHandler} >
-      <audio src={path} ref={audioRef} onEnded={endedHandler} onPlay={() => { dispatch(enableSongSelect()) }} onTimeUpdate={timeUpdateHandler}/>
+      <audio src={path} ref={audioRef} onEnded={endedHandler}/>
       <div className="visualizer__effect">
         <Switch>
           <Route exact path='/audioVisualizer' render={() => <Circle />}></Route>
           <Route path='/text' render={() => <Text />}></Route>
+          <Route path='/spotlight' component={Spotlight}></Route>
         </Switch>
         {paused ? <PauseIcon connect={connect} /> : <PlayIcon />}
       </div>
       <Controls
+        audioRef={audioRef}
         clickHandler={clickHandler}
-        changeAudioTime={changeAudioTime}
         connection={connection}
         rewindToTheend={rewindToTheend}
         rewindToTheStart={rewindToTheStart}
