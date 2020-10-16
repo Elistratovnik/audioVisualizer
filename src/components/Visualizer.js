@@ -95,7 +95,7 @@ function Visualizer() {
       dispatch(changePath(songs[currentSongIndex + 1].path))
       dispatch(changeCurrentSongIndex(currentSongIndex + 1))
     } else {
-      alert('закончились')
+      console.log('песни закончились')
       dispatch(setPaused(true))
       dispatch(enableSongSelect())
     }

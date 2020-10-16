@@ -29,6 +29,12 @@ function Controls({ clickHandler, connection, rewindToTheend, rewindToTheStart, 
     }
   }
 
+  const stopSongHandler = () => {
+    rewindToTheStart()
+    stop()
+  }
+
+
   const backwardSongHandler = () => {
     if (currentIndex > 0) {
       if (!songSelectDisabled) {
@@ -38,13 +44,8 @@ function Controls({ clickHandler, connection, rewindToTheend, rewindToTheStart, 
       }
     }
     else {
-      rewindToTheStart()
+      stopSongHandler()
     }
-  }
-
-  const stopSongHandler = () => {
-    rewindToTheStart()
-    stop()
   }
 
   return (
