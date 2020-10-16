@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b9ac254eaf55cb234556d38b447fa8a5",
+    "revision": "33687dad699cdc799ae8007ff288a6dd",
     "url": "/audioVisualizer/index.html"
   },
   {
-    "revision": "043835dc899bead93722",
+    "revision": "a7abec1d6de0fd27a7c5",
     "url": "/audioVisualizer/static/css/main.d5cdab6b.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/audioVisualizer/static/js/2.f87e35e0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "043835dc899bead93722",
-    "url": "/audioVisualizer/static/js/main.3088c16c.chunk.js"
+    "revision": "a7abec1d6de0fd27a7c5",
+    "url": "/audioVisualizer/static/js/main.a439200e.chunk.js"
   },
   {
     "revision": "a4a383f64b30dc5e13d6",
