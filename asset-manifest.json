@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/audioVisualizer/static/css/main.d5cdab6b.chunk.css",
-    "main.js": "/audioVisualizer/static/js/main.a439200e.chunk.js",
-    "main.js.map": "/audioVisualizer/static/js/main.a439200e.chunk.js.map",
+    "main.css": "/audioVisualizer/static/css/main.1efd7c59.chunk.css",
+    "main.js": "/audioVisualizer/static/js/main.2633de2b.chunk.js",
+    "main.js.map": "/audioVisualizer/static/js/main.2633de2b.chunk.js.map",
     "runtime-main.js": "/audioVisualizer/static/js/runtime-main.b2e7aab8.js",
     "runtime-main.js.map": "/audioVisualizer/static/js/runtime-main.b2e7aab8.js.map",
-    "static/js/2.f87e35e0.chunk.js": "/audioVisualizer/static/js/2.f87e35e0.chunk.js",
-    "static/js/2.f87e35e0.chunk.js.map": "/audioVisualizer/static/js/2.f87e35e0.chunk.js.map",
+    "static/js/2.63da77f4.chunk.js": "/audioVisualizer/static/js/2.63da77f4.chunk.js",
+    "static/js/2.63da77f4.chunk.js.map": "/audioVisualizer/static/js/2.63da77f4.chunk.js.map",
     "index.html": "/audioVisualizer/index.html",
-    "precache-manifest.3a87da418e9cc992beb58fb010c69a2c.js": "/audioVisualizer/precache-manifest.3a87da418e9cc992beb58fb010c69a2c.js",
+    "precache-manifest.ffe09229bd6f4c8f61834c93352a3e9a.js": "/audioVisualizer/precache-manifest.ffe09229bd6f4c8f61834c93352a3e9a.js",
     "service-worker.js": "/audioVisualizer/service-worker.js",
-    "static/css/main.d5cdab6b.chunk.css.map": "/audioVisualizer/static/css/main.d5cdab6b.chunk.css.map",
-    "static/js/2.f87e35e0.chunk.js.LICENSE.txt": "/audioVisualizer/static/js/2.f87e35e0.chunk.js.LICENSE.txt",
+    "static/css/main.1efd7c59.chunk.css.map": "/audioVisualizer/static/css/main.1efd7c59.chunk.css.map",
+    "static/js/2.63da77f4.chunk.js.LICENSE.txt": "/audioVisualizer/static/js/2.63da77f4.chunk.js.LICENSE.txt",
     "static/media/SpotLight.scss": "/audioVisualizer/static/media/playlist-header.ec4c9bb8.jpg",
     "static/media/song1.mp3": "/audioVisualizer/static/media/song1.3c036f40.mp3",
     "static/media/Text.scss": "/audioVisualizer/static/media/taiwan-5460063_1920.b95235e3.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.b2e7aab8.js",
-    "static/js/2.f87e35e0.chunk.js",
-    "static/css/main.d5cdab6b.chunk.css",
-    "static/js/main.a439200e.chunk.js"
+    "static/js/2.63da77f4.chunk.js",
+    "static/css/main.1efd7c59.chunk.css",
+    "static/js/main.2633de2b.chunk.js"
   ]
 }

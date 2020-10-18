@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "33687dad699cdc799ae8007ff288a6dd",
+    "revision": "bdd9bc66e6b7015ba5e5e91875ac0d1d",
     "url": "/audioVisualizer/index.html"
   },
   {
-    "revision": "a7abec1d6de0fd27a7c5",
-    "url": "/audioVisualizer/static/css/main.d5cdab6b.chunk.css"
+    "revision": "c9ca955218b64a972f64",
+    "url": "/audioVisualizer/static/css/main.1efd7c59.chunk.css"
   },
   {
-    "revision": "feba3e8a8cf065725737",
-    "url": "/audioVisualizer/static/js/2.f87e35e0.chunk.js"
+    "revision": "1b1685666ceda1bca2bb",
+    "url": "/audioVisualizer/static/js/2.63da77f4.chunk.js"
   },
   {
     "revision": "320addaff3e37295a01ab28fa4b66477",
-    "url": "/audioVisualizer/static/js/2.f87e35e0.chunk.js.LICENSE.txt"
+    "url": "/audioVisualizer/static/js/2.63da77f4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a7abec1d6de0fd27a7c5",
-    "url": "/audioVisualizer/static/js/main.a439200e.chunk.js"
+    "revision": "c9ca955218b64a972f64",
+    "url": "/audioVisualizer/static/js/main.2633de2b.chunk.js"
   },
   {
     "revision": "a4a383f64b30dc5e13d6",
