@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/audioVisualizer/static/css/main.1efd7c59.chunk.css",
-    "main.js": "/audioVisualizer/static/js/main.da1d5119.chunk.js",
-    "main.js.map": "/audioVisualizer/static/js/main.da1d5119.chunk.js.map",
+    "main.js": "/audioVisualizer/static/js/main.d96108a9.chunk.js",
+    "main.js.map": "/audioVisualizer/static/js/main.d96108a9.chunk.js.map",
     "runtime-main.js": "/audioVisualizer/static/js/runtime-main.b2e7aab8.js",
     "runtime-main.js.map": "/audioVisualizer/static/js/runtime-main.b2e7aab8.js.map",
     "static/js/2.63da77f4.chunk.js": "/audioVisualizer/static/js/2.63da77f4.chunk.js",
     "static/js/2.63da77f4.chunk.js.map": "/audioVisualizer/static/js/2.63da77f4.chunk.js.map",
     "index.html": "/audioVisualizer/index.html",
-    "precache-manifest.22bc1477f895a40de699bcc4a1d5172a.js": "/audioVisualizer/precache-manifest.22bc1477f895a40de699bcc4a1d5172a.js",
+    "precache-manifest.259a732a36884b084b86c2442062c149.js": "/audioVisualizer/precache-manifest.259a732a36884b084b86c2442062c149.js",
     "service-worker.js": "/audioVisualizer/service-worker.js",
     "static/css/main.1efd7c59.chunk.css.map": "/audioVisualizer/static/css/main.1efd7c59.chunk.css.map",
     "static/js/2.63da77f4.chunk.js.LICENSE.txt": "/audioVisualizer/static/js/2.63da77f4.chunk.js.LICENSE.txt",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.b2e7aab8.js",
     "static/js/2.63da77f4.chunk.js",
     "static/css/main.1efd7c59.chunk.css",
-    "static/js/main.da1d5119.chunk.js"
+    "static/js/main.d96108a9.chunk.js"
   ]
 }
