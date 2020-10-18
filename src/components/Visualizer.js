@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSongDuration, changeCurrentSongIndex, changePath, disableSongSelect, enableSongSelect, setContext, setCurrentTrackDuration, setPaused } from '../redux/actions';
+import { addSongDuration, changeCurrentSongIndex, changePath, disableSongSelect, enableSongSelect, hideSpinner, setContext, setCurrentTrackDuration, setPaused } from '../redux/actions';
 import '../sass/Visualizer.scss'
 import Circle from './effects/Circle';
 import Controls from './Controls/Controls';
@@ -110,7 +110,7 @@ function Visualizer() {
 
   return (
     <div className="visualizer" onClick={clickHandler} >
-      <audio src={path} ref={audioRef} onEnded={endedHandler}/>
+      <audio src={path} ref={audioRef} onEnded={endedHandler} onCanPlay={() => dispatch(hideSpinner())}/>
       <div className="visualizer__effect">
         <Switch>
           <Route exact path='/audioVisualizer' render={() => <Circle />}></Route>
