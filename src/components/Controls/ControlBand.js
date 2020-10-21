@@ -5,23 +5,26 @@ import Moment from 'react-moment';
 function ControlBand({ audioRef }) {
   const [currentTime, setCurrentTime] = useState(0)
   let updateCurrentTimeRef = useRef()
-  const { duration, paused } = useSelector(state => ({
+  const { duration, paused, loaded } = useSelector(state => ({
     duration: state.currentTrackDuration,
-    paused: state.paused
+    paused: state.paused,
+    loaded: state.loaded
   }))
 
   useEffect(() => {
-    if (!paused) {
-      updateCurrentTimeRef.current = setInterval(() => {
-        setCurrentTime(audioRef.current.currentTime)
-      }, 200)
-    } else {
-      clearInterval(updateCurrentTimeRef.current)
+    if (loaded) {
+      if (!paused) {
+        updateCurrentTimeRef.current = setInterval(() => {
+          setCurrentTime(audioRef.current.currentTime)
+        }, 200)
+      } else {
+        clearInterval(updateCurrentTimeRef.current)
+      }
+      return () => {
+        clearInterval(updateCurrentTimeRef.current)
+      }
     }
-    return () => {
-      clearInterval(updateCurrentTimeRef.current)
-    }
-  }, [paused, audioRef])
+  }, [paused, audioRef, loaded])
 
   const changeAudioTime = (event) => {
     const { width } = event.currentTarget.getBoundingClientRect()

@@ -30,9 +30,6 @@ function Visualizer() {
 
   useEffect(() => {
     dispatch(setContext(new AudioContext(), audioRef.current))
-    setTimeout(() => {
-      dispatch(setCurrentTrackDuration(audioRef.current.duration))
-    }, 1000)
   }, [dispatch])
 
   useEffect(() => {
@@ -110,7 +107,12 @@ function Visualizer() {
 
   return (
     <div className="visualizer" onClick={clickHandler} >
-      <audio src={path} ref={audioRef} onEnded={endedHandler} onCanPlay={() => dispatch(hideSpinner())}/>
+      <audio src={path} ref={audioRef} onEnded={endedHandler} onCanPlay={() => {
+        dispatch(hideSpinner())
+        setTimeout(() => {
+          dispatch(setCurrentTrackDuration(audioRef.current.duration))
+        }, 1000)
+        }}/>
       <div className="visualizer__effect">
         <Switch>
           <Route exact path='/audioVisualizer' render={() => <Circle />}></Route>
